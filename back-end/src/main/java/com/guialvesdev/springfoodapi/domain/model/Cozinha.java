@@ -1,4 +1,4 @@
-package com.guialvesdev.springfoodapi.domain;
+package com.guialvesdev.springfoodapi.domain.model;
 
 
 import javax.persistence.*;
