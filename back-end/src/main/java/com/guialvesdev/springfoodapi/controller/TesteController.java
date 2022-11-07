@@ -43,6 +43,12 @@ public class TesteController {
     }
 
 
+    @GetMapping("/restaurantes/por-nome")
+    public List<Restaurante> restaurantesPorNome(String nome){
+        return cozinhaRepository.findTodasByNomeContaining(nome);
+    }
+
+
 
 
 
