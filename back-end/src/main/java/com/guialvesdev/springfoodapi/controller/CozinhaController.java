@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -30,18 +31,18 @@ public class CozinhaController {
 
 
     @GetMapping
-    public List<Cozinha> listar(){
-        return cozinhaRepository.listar();
+    public List<Cozinha> list(){
+        return cozinhaRepository.findAll();
 
 
     }
 
     @GetMapping("/{cozinhaId}")
-    public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId){
-        Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
+    public ResponseEntity<Cozinha> find(@PathVariable Long cozinhaId){
+        Optional <Cozinha> cozinha = cozinhaRepository.findById(cozinhaId);
 
-       if (cozinha != null){
-           return ResponseEntity.ok(cozinha);
+       if (cozinha.isPresent()){
+           return ResponseEntity.ok(cozinha.get());
 
        }
        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -59,13 +60,13 @@ public class CozinhaController {
 
 
     @PutMapping("{cozinhaId}")
-    public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId @RequestBody  Cozinha cozinha){
-        Cozinha cozinhaAtual = cozinhaRepository.buscar(cozinhaId);
+    public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody  Cozinha cozinha){
+        Optional<Cozinha> cozinhaAtual  = cozinhaRepository.findById(cozinhaId);
 
-        if(cozinhaAtual != null){
-            BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-            cadastroCozinha.salvar(cozinhaAtual);
-            return ResponseEntity.ok(cozinhaAtual);
+        if(cozinhaAtual.isPresent()){
+            BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
+            Cozinha cozinhaSave = cadastroCozinha.salvar(cozinhaAtual.get());
+            return ResponseEntity.ok(cozinhaSave);
 
         }
         return ResponseEntity.notFound().build();
