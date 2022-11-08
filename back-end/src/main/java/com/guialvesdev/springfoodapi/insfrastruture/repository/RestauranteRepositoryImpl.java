@@ -1,7 +1,11 @@
 package com.guialvesdev.springfoodapi.insfrastruture.repository;
 
 import com.guialvesdev.springfoodapi.domain.model.Restaurante;
+import com.guialvesdev.springfoodapi.repository.RestauranteRepository;
+import com.guialvesdev.springfoodapi.repository.RestauranteRepositoryQueries;
 import org.hibernate.criterion.CriteriaQuery;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -15,11 +19,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.guialvesdev.springfoodapi.insfrastruture.repository.spec.RestauranteSpecs.comNomeSemelhante;
+
 @Repository
-public class RestauranteRepositoryImpl implements  RestauranteRepositoryQueries{
+public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
     @PersistenceContext
     private EntityManager manager;
+
+    @Autowired @Lazy
+    private RestauranteRepository restauranteRepository;
 
     @Override
     public List<Restaurante> find(String nome,
@@ -27,7 +36,7 @@ public class RestauranteRepositoryImpl implements  RestauranteRepositoryQueries{
         CriteriaBuilder builder = manager.getCriteriaBuilder();
 
         CriteriaQuery<Restaurante> criteria = builder.createQuery(Restaurante.class);
-        Root<Restaurante> root =  criteria.from(Restaurante.class);//FROM
+        Root<Restaurante> root =  criteria.from(Restaurante.class);
 
 
         var predicates = new ArrayList<Predicate>();
@@ -44,7 +53,6 @@ public class RestauranteRepositoryImpl implements  RestauranteRepositoryQueries{
             predicates.add(builder.lessThanOrEqualTo(root.get("taxaFrete"), taxaFreteFinal));
         }
 
-
         criteria.where(predicates.toArray(new Predicate[0]));
 
         TypedQuery<Restaurante> query = manager.createQuery(criteria);
@@ -54,8 +62,10 @@ public class RestauranteRepositoryImpl implements  RestauranteRepositoryQueries{
 
     }
 
-
-
+    @Override
+    public List<Restaurante> findComFreteGratis(String nome) {
+        return restauranteRepository.findAll(findComFreteGratis().and(comNomeSemelhante(nome)));
+    }
 
 
 }

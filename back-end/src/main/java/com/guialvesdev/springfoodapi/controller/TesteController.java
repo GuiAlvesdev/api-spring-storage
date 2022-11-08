@@ -53,10 +53,14 @@ public class TesteController {
 
     @GetMapping("/restaurantes/com-frete-gratis")
     public List<Restaurante> restaurantesComFreteGratis(String nome){
-
-
-        return restauranteRepository.findAll(RestauranteSpecs.comFreteGratis()));
+            return restauranteRepository.findComFreteGratis(nome);
     }
+
+    @GetMapping("/restaurante/primeiro")
+    public Optional<Restaurante> restaurantePrimeiro(){
+        return restauranteRepository.buscarPrimeiro();
+    }
+
 
 
 
