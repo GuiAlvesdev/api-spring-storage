@@ -2,14 +2,11 @@ package com.guialvesdev.springfoodapi.domain.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 
 @Data
-@Embeddable  //INCORPORAVEL POR ALGUMA CLASSE
+@Embeddable
 public class Endereco {
 
     @Column(name = "endereco_cep")
@@ -27,10 +24,9 @@ public class Endereco {
     @Column(name = "endereco_bairro")
     private String bairro;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "endereco_cidade_id")
-    private String cidade;
-
+    private Cidade cidade;
 
 
 }
