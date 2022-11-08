@@ -32,9 +32,9 @@ public class TesteController {
     }
 
 
-    @GetMapping("/cozinhas/unica-por-nome")
-    public Optional<Cozinha> cozinhasPorNome(@RequestParam("nome") String nome){
-        return cozinhaRepository.findByNome(nome);
+    @GetMapping("/cozinhas/primeira")
+    public Optional<Cozinha> cozinhaPrimeiro(){
+        return cozinhaRepository.buscarPrimeiro();
     }
 
 
