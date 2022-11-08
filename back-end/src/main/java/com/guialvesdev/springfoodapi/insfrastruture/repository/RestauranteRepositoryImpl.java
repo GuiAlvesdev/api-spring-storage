@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.guialvesdev.springfoodapi.insfrastruture.repository.spec.RestauranteSpecs.comFreteGratis;
 import static com.guialvesdev.springfoodapi.insfrastruture.repository.spec.RestauranteSpecs.comNomeSemelhante;
 
 @Repository
