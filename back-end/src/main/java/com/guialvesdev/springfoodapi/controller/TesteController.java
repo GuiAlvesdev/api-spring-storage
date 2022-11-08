@@ -3,6 +3,7 @@ package com.guialvesdev.springfoodapi.controller;
 
 import com.guialvesdev.springfoodapi.domain.model.Cozinha;
 import com.guialvesdev.springfoodapi.domain.model.Restaurante;
+import com.guialvesdev.springfoodapi.insfrastruture.repository.spec.RestauranteSpecs;
 import com.guialvesdev.springfoodapi.repository.CozinhaRepository;
 import com.guialvesdev.springfoodapi.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,14 @@ public class TesteController {
         return cozinhaRepository.findTodasByNomeContaining(nome);
     }
 
+
+
+    @GetMapping("/restaurantes/com-frete-gratis")
+    public List<Restaurante> restaurantesComFreteGratis(String nome){
+
+
+        return restauranteRepository.findAll(RestauranteSpecs.comFreteGratis()));
+    }
 
 
 
