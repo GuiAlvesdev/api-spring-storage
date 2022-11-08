@@ -5,9 +5,12 @@ package com.guialvesdev.springfoodapi.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,8 +38,21 @@ public class Restaurante {
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
+    @JsonIgnore
     @Embedded   //INCORPORA O ENDERECO
     private Endereco endereco;
+
+
+    @CreationTimestamp         //hibernate atribui uma data hora aut
+    @Column(nullable = false)  //nao pode ser nulo
+    private LocalDateTime dataCadastro;
+
+
+    @UpdateTimestamp            //hibernate atribui uma data hora aut
+    @Column(nullable = false)  //nao pode ser nulo
+    private LocalDateTime dataAtualizacao;
+
+
 
 
     @ManyToMany
