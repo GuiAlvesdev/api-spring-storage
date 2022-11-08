@@ -11,18 +11,21 @@ public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> i
 
     private EntityManager manager;
 
-
-    public CustomJpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+    public CustomJpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation,
+                                   EntityManager entityManager) {
         super(entityInformation, entityManager);
 
         this.manager = entityManager;
     }
 
-
     @Override
     public Optional<T> buscarPrimeiro() {
-        var jpql = "from" + getDomainClass().getName();
-        T entity = manager.createQuery(jpql, getDomainClass()).setMaxResults(1).getSingleResult();
+        var jpql = "from " + getDomainClass().getName();
+
+        T entity = manager.createQuery(jpql, getDomainClass())
+                .setMaxResults(1)
+                .getSingleResult();
+
         return Optional.ofNullable(entity);
     }
 
