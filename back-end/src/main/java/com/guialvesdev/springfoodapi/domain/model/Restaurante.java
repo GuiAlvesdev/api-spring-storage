@@ -32,7 +32,7 @@ public class Restaurante {
 
     //	@JsonIgnoreProperties("hibernateLazyInitializer")
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)  //ASSOCIACAO PREGUICOSA, CARREGAR SO SE FOR NECESSARIO, EVITANDO O SELECT, CARREGAMENTO MAIS DEMORADO
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
@@ -40,15 +40,18 @@ public class Restaurante {
     @Embedded
     private Endereco endereco;
 
+
     @JsonIgnore
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
     private LocalDateTime dataCadastro;
 
+
     @JsonIgnore
     @UpdateTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
     private LocalDateTime dataAtualizacao;
+
 
     @JsonIgnore
     @ManyToMany

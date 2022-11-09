@@ -29,8 +29,12 @@ public class RestauranteController {
 
     @GetMapping
     public List<Restaurante> listar() {
+
         return restauranteRepository.findAll();
+
     }
+
+
 
     @GetMapping("/{restauranteId}")
     public ResponseEntity<Restaurante> buscar(@PathVariable Long restauranteId) {
@@ -42,6 +46,8 @@ public class RestauranteController {
 
         return ResponseEntity.notFound().build();
     }
+
+
 
     @PostMapping
     public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante) {
