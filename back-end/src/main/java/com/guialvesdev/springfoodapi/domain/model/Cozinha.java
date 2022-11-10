@@ -10,10 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Data   //Gera getters and setters
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tb_cozinha")
 public class Cozinha {
 
     @EqualsAndHashCode.Include
