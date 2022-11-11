@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,12 +27,13 @@ public class Restaurante {
 
 
     @Column(nullable = false)
+    @NotNull
     private String nome;
 
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-    //	@JsonIgnoreProperties("hibernateLazyInitializer")
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)  //ASSOCIACAO PREGUICOSA, CARREGAR SO SE FOR NECESSARIO, EVITANDO O SELECT, CARREGAMENTO MAIS DEMORADO
     @JoinColumn(name = "cozinha_id", nullable = false)
