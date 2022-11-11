@@ -5,19 +5,19 @@ import lombok.Getter;
 @Getter
 public enum ProblemType {
 
-    ERRO_SISTEMA("/erro-de-sistema", "Erro de sistema"),
-    PARAMETRO_INVALIDO("/parametro-invalido", "Parametro invalido"),
-    MENSAGEM_INCOMPREENSIVEL("/mensagem-incompreensivel", "Mensagem incompreensivel"),
-    RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso nao encontrado"),
+    ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema"),
+    PARAMETRO_INVALIDO("/parametro-invalido", "Parâmetro inválido"),
+    MENSAGEM_INCOMPREENSIVEL("/mensagem-incompreensivel", "Mensagem incompreensível"),
+    RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso não encontrado"),
     ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso"),
-    ERRO_NEGOCIO("/erro-negocio", "Violacao de regra de negocio");
+    ERRO_NEGOCIO("/erro-negocio", "Violação de regra de negócio");
 
     private String title;
     private String uri;
 
     ProblemType(String path, String title){
         this.uri = "htttp://apifood.com.br" + path;
-        this.title;
+        this.title = title;
     }
 
 
