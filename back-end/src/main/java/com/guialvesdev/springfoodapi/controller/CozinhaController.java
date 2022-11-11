@@ -32,6 +32,7 @@ public class CozinhaController {
 
     @GetMapping
     public List<Cozinha> listar() {
+
         return cozinhaRepository.findAll();
     }
 
@@ -47,6 +48,7 @@ public class CozinhaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cozinha adicionar(@RequestBody Cozinha cozinha) {
+
         return cadastroCozinha.salvar(cozinha);
     }
 
@@ -63,10 +65,12 @@ public class CozinhaController {
 
 
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+
     @DeleteMapping("/{cozinhaId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long cozinhaId) {
-       cadastroCozinha.excluir(cozinhaId);
+
+        cadastroCozinha.excluir(cozinhaId);
     }
 
 

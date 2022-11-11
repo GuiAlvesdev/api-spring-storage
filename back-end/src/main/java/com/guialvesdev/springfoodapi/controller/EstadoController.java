@@ -22,19 +22,26 @@ public class EstadoController {
 
     @GetMapping
     public List<Estado> listar() {
+
         return estadoRepository.findAll();
     }
 
+
     @GetMapping("/{estadoId}")
     public Estado buscar(@PathVariable Long estadoId) {
+
         return cadastroEstado.buscarOuFalhar(estadoId);
     }
+
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Estado adicionar(@RequestBody Estado estado) {
         return cadastroEstado.salvar(estado);
     }
+
+
 
     @PutMapping("/{estadoId}")
     public Estado atualizar(@PathVariable Long estadoId,
@@ -49,6 +56,7 @@ public class EstadoController {
     @DeleteMapping("/{estadoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long estadoId) {
+
         cadastroEstado.excluir(estadoId);
     }
 
