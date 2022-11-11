@@ -28,57 +28,38 @@ public class CidadeController {
 
     @GetMapping("/{cidadeId}")
     public Cidade buscar(@PathVariable Long cidadeId) {
+
         return cadastroCidade.buscarOuFalhar(cidadeId);
     }
 
-//	@PostMapping
-//	public ResponseEntity<?> adicionar(@RequestBody Cidade cidade) {
-//		try {
-//			cidade = cadastroCidade.salvar(cidade);
-//
-//			return ResponseEntity.status(HttpStatus.CREATED)
-//					.body(cidade);
-//		} catch (EntidadeNaoEncontradaException e) {
-//			return ResponseEntity.badRequest()
-//					.body(e.getMessage());
-//		}
-//	}
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cidade adicionar(@RequestBody Cidade cidade) {
-        return cadastroCidade.salvar(cidade);
+        try{
+            return cadastroCidade.salvar(cidade);
+        }catch (EstadoNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
+
     }
 
-//	@PutMapping("/{cidadeId}")
-//	public ResponseEntity<?> atualizar(@PathVariable Long cidadeId,
-//			@RequestBody Cidade cidade) {
-//		try {
-//			Cidade cidadeAtual = cidadeRepository.findById(cidadeId).orElse(null);
-//
-//			if (cidadeAtual != null) {
-//				BeanUtils.copyProperties(cidade, cidadeAtual, "id");
-//
-//				cidadeAtual = cadastroCidade.salvar(cidadeAtual);
-//				return ResponseEntity.ok(cidadeAtual);
-//			}
-//
-//			return ResponseEntity.notFound().build();
-//
-//		} catch (EntidadeNaoEncontradaException e) {
-//			return ResponseEntity.badRequest()
-//					.body(e.getMessage());
-//		}
-//	}
+
 
     @PutMapping("/{cidadeId}")
     public Cidade atualizar(@PathVariable Long cidadeId,
                             @RequestBody Cidade cidade) {
-        Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
+        try{
+            Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
 
-        BeanUtils.copyProperties(cidade, cidadeAtual, "id");
+            BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
-        return cadastroCidade.salvar(cidadeAtual);
+            return cadastroCidade.salvar(cidadeAtual);
+
+        }catch (EstadoNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e)
+        }
+
     }
 
     @DeleteMapping("/{cidadeId}")
