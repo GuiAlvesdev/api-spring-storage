@@ -1,5 +1,7 @@
 package com.guialvesdev.springfoodapi.controller;
 
+import com.guialvesdev.springfoodapi.domain.exception.EstadoNaoEncontradoException;
+import com.guialvesdev.springfoodapi.domain.exception.NegocioException;
 import com.guialvesdev.springfoodapi.domain.model.Cidade;
 import com.guialvesdev.springfoodapi.domain.service.CadastroCidadeService;
 import com.guialvesdev.springfoodapi.repository.CidadeRepository;
@@ -18,48 +20,40 @@ public class CidadeController {
     private CidadeRepository cidadeRepository;
 
     @Autowired
-    private CadastroCidadeService cadastroCidadeService;
+    private CadastroCidadeService cadastroCidade;
 
     @GetMapping
-    public List<Cidade> listar(){
+    public List<Cidade> listar() {
         return cidadeRepository.findAll();
-
     }
 
     @GetMapping("/{cidadeId}")
     public Cidade buscar(@PathVariable Long cidadeId) {
-
         return cadastroCidade.buscarOuFalhar(cidadeId);
     }
-
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cidade adicionar(@RequestBody Cidade cidade) {
-        try{
+        try {
             return cadastroCidade.salvar(cidade);
-        }catch (EstadoNaoEncontradoException e){
+        } catch (EstadoNaoEncontradoException e) {
             throw new NegocioException(e.getMessage(), e);
         }
-
     }
-
-
 
     @PutMapping("/{cidadeId}")
     public Cidade atualizar(@PathVariable Long cidadeId,
                             @RequestBody Cidade cidade) {
-        try{
+        try {
             Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
 
             BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
             return cadastroCidade.salvar(cidadeAtual);
-
-        }catch (EstadoNaoEncontradoException e){
-            throw new NegocioException(e.getMessage(), e)
+        } catch (EstadoNaoEncontradoException e) {
+            throw new NegocioException(e.getMessage(), e);
         }
-
     }
 
     @DeleteMapping("/{cidadeId}")
@@ -67,9 +61,6 @@ public class CidadeController {
     public void remover(@PathVariable Long cidadeId) {
         cadastroCidade.excluir(cidadeId);
     }
-
-
-
 
 
 }

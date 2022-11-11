@@ -1,6 +1,7 @@
 package com.guialvesdev.springfoodapi.domain.service;
 
 import com.guialvesdev.springfoodapi.domain.exception.EntidadeEmUsoException;
+import com.guialvesdev.springfoodapi.domain.exception.EstadoNaoEncontradoException;
 import com.guialvesdev.springfoodapi.domain.model.Estado;
 import com.guialvesdev.springfoodapi.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class CadastroEstadoService {
 
     public Estado buscarOuFalhar(Long estadoId) {
         return estadoRepository.findById(estadoId)
-                .orElseThrow(() -> new EstadoNaoEncontradoException(estadoId);
+                .orElseThrow(() -> new EstadoNaoEncontradoException(estadoId));
     }
 
 

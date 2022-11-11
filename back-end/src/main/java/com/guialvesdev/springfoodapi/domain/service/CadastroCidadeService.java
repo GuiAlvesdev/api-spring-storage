@@ -1,5 +1,6 @@
 package com.guialvesdev.springfoodapi.domain.service;
 
+import com.guialvesdev.springfoodapi.domain.exception.CidadeNaoEncontradaException;
 import com.guialvesdev.springfoodapi.domain.exception.EntidadeEmUsoException;
 import com.guialvesdev.springfoodapi.domain.model.Cidade;
 import com.guialvesdev.springfoodapi.domain.model.Estado;
@@ -12,20 +13,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class CadastroCidadeService {
 
-    private static final String MSG_CIDADE_EM_USO = "cidade de codigo %d em uso";
-
-
+    private static final String MSG_CIDADE_EM_USO
+            = "Cidade de código %d não pode ser removida, pois está em uso";
 
     @Autowired
     private CidadeRepository cidadeRepository;
 
     @Autowired
-    private CadastroEstadoService cadastroEstadoService;
+    private CadastroEstadoService cadastroEstado;
 
     public Cidade salvar(Cidade cidade) {
         Long estadoId = cidade.getEstado().getId();
 
         Estado estado = cadastroEstado.buscarOuFalhar(estadoId);
+
         cidade.setEstado(estado);
 
         return cidadeRepository.save(cidade);
@@ -38,7 +39,6 @@ public class CadastroCidadeService {
         } catch (EmptyResultDataAccessException e) {
             throw new CidadeNaoEncontradaException(cidadeId);
 
-
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
                     String.format(MSG_CIDADE_EM_USO, cidadeId));
@@ -47,7 +47,7 @@ public class CadastroCidadeService {
 
     public Cidade buscarOuFalhar(Long cidadeId) {
         return cidadeRepository.findById(cidadeId)
-                .orElseThrow(() -> new CidadeNaoEncontradaException(cidadeId);
+                .orElseThrow(() -> new CidadeNaoEncontradaException(cidadeId));
     }
 
 

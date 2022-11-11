@@ -1,5 +1,6 @@
 package com.guialvesdev.springfoodapi.domain.service;
 
+import com.guialvesdev.springfoodapi.domain.exception.RestauranteNaoEncontradoException;
 import com.guialvesdev.springfoodapi.domain.model.Cozinha;
 import com.guialvesdev.springfoodapi.domain.model.Restaurante;
 import com.guialvesdev.springfoodapi.repository.RestauranteRepository;

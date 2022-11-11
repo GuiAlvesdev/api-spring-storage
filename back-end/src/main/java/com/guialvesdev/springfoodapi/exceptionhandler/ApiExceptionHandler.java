@@ -1,18 +1,31 @@
 package com.guialvesdev.springfoodapi.exceptionhandler;
 
 
-import org.hibernate.TypeMismatchException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.guialvesdev.springfoodapi.domain.exception.EntidadeEmUsoException;
+import com.guialvesdev.springfoodapi.domain.exception.EntidadeNaoEncontradaException;
+import com.guialvesdev.springfoodapi.domain.exception.NegocioException;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class ApiExceptionHandler {
+public class ApiExceptionHandler extends  ResponseEntityExceptionHandler {
 
     public static final String MSG_ERRO_GENERICA_USUARIO_FINAL
             = "Ocorreu um erro interno inesperado no sistema. Tente novamente e se "
@@ -208,30 +221,10 @@ public class ApiExceptionHandler {
                 .detail(detail);
     }
 
-    private String joinPath(List<Reference> references) {
+    private String joinPath(List<JsonMappingException.Reference> references) {
         return references.stream()
                 .map(ref -> ref.getFieldName())
                 .collect(Collectors.joining("."));
     }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
