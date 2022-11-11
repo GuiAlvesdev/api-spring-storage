@@ -1,7 +1,10 @@
 package com.guialvesdev.springfoodapi.domain.service;
 
-import com.guialvesdev.springfoodapi.domain.exception.EntidadeNaoEncontradaException;
+import com.guialvesdev.springfoodapi.domain.exception.EntidadeEmUsoException;
+import com.guialvesdev.springfoodapi.domain.model.Estado;
+import com.guialvesdev.springfoodapi.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +13,6 @@ public class CadastroEstadoService {
 
     private static final String MSG_ESTADO_EM_USO = "estado de codigo %d nao pode ser removido, pois esta em uso";
 
-    private static final String MSG_ESTADO_NAO_ENCONTRADO = "nao existe um cadastro de estado com o codigo %d";
 
 
     @Autowired
@@ -26,8 +28,7 @@ public class CadastroEstadoService {
             estadoRepository.deleteById(estadoId);
 
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
-                    String.format(MSG_ESTADO_NAO_ENCONTRADO, estadoId));
+            throw new EstadoNaoEncontradoException(estadoId);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
@@ -37,20 +38,8 @@ public class CadastroEstadoService {
 
     public Estado buscarOuFalhar(Long estadoId) {
         return estadoRepository.findById(estadoId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format(MSG_ESTADO_NAO_ENCONTRADO, estadoId)));
+                .orElseThrow(() -> new EstadoNaoEncontradoException(estadoId);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
